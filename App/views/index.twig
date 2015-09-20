@@ -1,0 +1,10 @@
+{% extends "template.twig" %}
+
+
+{% block content %}
+    {% for contenu1 in contenus %}
+        <p>{{ contenu1}}</p>
+        <div style="height: 10px; background-color: #1b6d85;"></div>
+    {% endfor %}
+
+{%  endblock %}

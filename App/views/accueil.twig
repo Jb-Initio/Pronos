@@ -1,0 +1,17 @@
+{% extends "template.twig" %}
+
+{% block title %}Accueil{%  endblock %}
+
+{% block title_content %}Premier League{% endblock %}
+
+{% block content %}
+
+    <form class="form-signin" action="{{ app.url_generator.generate('mom') }}" method="POST">
+        <h2 class="form-signin-heading">Be-Pronostico</h2>
+        <label for="inputPseudo" class="sr-only">Entrez un psoeudo</label>
+        <input type="text" id="pseudo" name="pseudo" class="form-control" placeholder="Dexter Olivier" required autofocus>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+{% endblock %}
+
+{% block lien %}http://localhost/silex_pronostic/web/index.php/indexController/period {% endblock %}
