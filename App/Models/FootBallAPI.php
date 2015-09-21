@@ -61,13 +61,18 @@ class FootBallAPI
 
     /**
      * Permet d'avoir l'ensemble des matchs du jour correspondant a la league sélectionnée.
+     * Si le 2nd paramêtre n'est pas défini, la date du jour sera automatiquement attribué à $today.
      * (Avec un compte free, seul la Premier League peut être consultée.)
      * @param int $comp_id identifiant de la compétition
+     * @param string today spécifie la date des matchs voulus.
      * @return mixed Résultat sour forme objet php
      */
-    public static function getMatchsOfTheDay($comp_id = 1204)
+    public static function getMatchsOfTheDay($comp_id = 1204, $today = null)
     {
-        $req_today = 'http://football-api.com/api/?Action=fixtures&APIKey='.self::API_KEY.'&comp_id='.$comp_id.'&match_date='. date('d.m.Y');
+        if ($today === null) {
+           $today =  date('d.m.Y');
+        }
+        $req_today = 'http://football-api.com/api/?Action=fixtures&APIKey='.self::API_KEY.'&comp_id='.$comp_id.'&match_date='. $today;
         $request_today = new \sylouuu\Curl\Get($req_today);
         $request_today->send();
         return json_decode($request_today->getResponse());

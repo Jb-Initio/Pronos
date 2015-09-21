@@ -20,18 +20,25 @@ class MatchController implements ControllerProviderInterface
     {
         if ($app['session']->get('user') === null) {
             $tmp_message = $app['session']->get('tmp_message');
-            // if ($app['request']->server->get('REQUEST_METHOD') != 'POST') {
             if ($tmp_message === null) {
                 return  $app->redirect("/silex_pronostic/web/index.php/");
             }
             $app['session']->set('user', ['user' => new User($app['session']->get('tmp_message'))]);
+            $app['session']->set('tmp_message', null);
         }
-        //var_dump($app['session']->get('user'));
-        $matchs_jour = FootBallAPI::getMatchsOfTheDay();
-        $tab_matches = $matchs_jour;
+        //Récupération & stockage  matches data
+        $matchs_jour = FootBallAPI::getMatchsOfTheDay(null, '20.09.2015');
+
+        if (property_exists($matchs_jour, 'ERROR') && (property_exists($matchs_jour, 'ERROR') == null)){
+
+            return $app['twig']->render('matchsjour.twig', array('matches' =>[],
+                                                                 'error' => true
+                                                                 ));
+        }
+        $tab_matches = $matchs_jour->matches;
+        $app['session']->set('matches', $tab_matches);
         var_dump($tab_matches);
-        die();
-        return $app['twig']->render('matchsjour.twig', []);
+        return $app['twig']->render('matchsjour.twig', array('matches' => $tab_matches));
     }
 
     public function matchsWeek(Application $app)

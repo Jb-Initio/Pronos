@@ -12,6 +12,7 @@
 
     <link href="../../public/css/bootstrap.css" rel="stylesheet">
     <link href="../../public/css/signin.css" rel="stylesheet">
+    <link href="../../public/css/tableau.css" rel="stylesheet">
     <!-- Raison de l'ajout des 2 lignes du dessous : La vue matchsjour du MatchController -->
     <!-- prend en compte le chemin css des 2 balises link du dessus mais pas le 2 balises du dessous. -->
     <!-- Pour la vue accueil d'IndexController, c'est l'inverse -->
@@ -38,7 +39,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Compétitions</a>
+            <a class="navbar-brand" href="#">Les Compétitions</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -49,7 +50,7 @@
     </div>
 </nav>
 
-<div class="container">
+<div class="container center-elements" style="margin-top: 45px;" >
 
     <div class="starter-template">
         <h1>{% block title_content %}{% endblock %}</h1>

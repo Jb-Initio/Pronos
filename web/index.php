@@ -1,41 +1,46 @@
 <?php
-
 $loader = require_once __DIR__.'/../vendor/autoload.php';
 require __DIR__.'/../vendor/doctrine/common/lib/Doctrine/Common/ClassLoader.php';
-
 
 use Doctrine\Common\ClassLoader;
 use Symfony\Component\HttpFoundation\Request;
 
-//Ajout du répertoir applicatif dans l'autoloader
-$loader->add("App", dirname(__DIR__));
-
+$loader->add("App", dirname(__DIR__));//Ajout du répertoir applicatif dans l'autoloader
 //METTRE LE BON CHEMIN VERS DOCTRINE !!!!!!!
 $classLoader = new ClassLoader('Doctrine', '/path/to/doctrine');
 $classLoader->register();
 
 $app = new Silex\Application();
-
 $app['debug'] = true;
-
 $app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => '../App/views',
 ));
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 
+
 //On indique ou aller pour le chemin http://localhost/silex_pronostic/web/index.php/
 $app->post('mom', function (Request $request) use ($app) {
-    var_dump("entré dans : post('mom'");
     $pseudo = $request->get('pseudo');
     $app['session']->set('tmp_message', ['pseudo' => $pseudo]);
-
 
     return $app->redirect('/silex_pronostic/web/index.php/MatchController');
 })->bind('mom');
 
+$app->get('/pronostic/', function (Request $request) use ($app) {
+    $id = $request->get('match_id');
+    $app['session']->set('tmp_message', ['match_id' => $id]);
+
+    return $app->redirect('/silex_pronostic/web/index.php/PronosController');
+})->bind('pronostic');
+
+
 $app->mount("/MatchController", new App\Controllers\MatchController());
+$app->mount("/PronosController", new App\Controllers\PronosController());
 $app->mount("/", new App\Controllers\IndexController());
+
+
+
 
 /*
 $app->get('/accueil', function () use ($app) {

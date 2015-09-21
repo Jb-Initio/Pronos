@@ -1,0 +1,9 @@
+tbody tr:nth-child(even) {
+    background-color: #66f086;
+}
+tbody tr:nth-child(2n+1) {
+    background-color: #65eff5;
+}
+tbody tr:hover {
+    background-color: #929780;
+}
