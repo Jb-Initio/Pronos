@@ -23,7 +23,7 @@ class MatchController implements ControllerProviderInterface
             if ($tmp_message === null) {
                 return  $app->redirect("/silex_pronostic/web/index.php/");
             }
-            $app['session']->set('user', ['user' => new User($app['session']->get('tmp_message'))]);
+            $app['session']->set('user', ['user' => new User($app['session']->get('tmp_message')['pseudo'])]);
             $app['session']->set('tmp_message', null);
         }
         //Récupération & stockage  matches data
