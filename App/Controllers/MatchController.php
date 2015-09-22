@@ -18,6 +18,7 @@ class MatchController implements ControllerProviderInterface
 {
     public function matchsDay(Application $app)
     {
+        // VÃ©rifie si l'utilisateur possÃ¨de un nom
         if ($app['session']->get('user') === null) {
             $tmp_message = $app['session']->get('tmp_message');
             if ($tmp_message === null) {
@@ -26,7 +27,7 @@ class MatchController implements ControllerProviderInterface
             $app['session']->set('user', ['user' => new User($app['session']->get('tmp_message')['pseudo'])]);
             $app['session']->set('tmp_message', null);
         }
-        //Récupération & stockage  matches data
+        //Rï¿½cupï¿½ration & stockage  matches data
         $matchs_jour = FootBallAPI::getMatchsOfTheDay(null, '20.09.2015');
 
         if (property_exists($matchs_jour, 'ERROR') && (property_exists($matchs_jour, 'ERROR') == null)){
@@ -37,7 +38,6 @@ class MatchController implements ControllerProviderInterface
         }
         $tab_matches = $matchs_jour->matches;
         $app['session']->set('matches', $tab_matches);
-        var_dump($tab_matches);
         return $app['twig']->render('matchsjour.twig', array('matches' => $tab_matches));
     }
 
@@ -57,9 +57,9 @@ class MatchController implements ControllerProviderInterface
     public function connect(Application $app)
     {
         $match = $app['controllers_factory'];
-        //Définition des routes
+        //Dï¿½finition des routes
         $match->match("/", __CLASS__.'::matchsDay');
-        $match->match("/matchs_day", __CLASS__.'::matchsDay');// Code équivalent ==> $index->match("/", 'App\Controller\IndexController::index');
+        $match->match("/matchs_day", __CLASS__.'::matchsDay');// Code ï¿½quivalent ==> $index->match("/", 'App\Controller\IndexController::index');
         $match->match("/matchs_week", __CLASS__.'::matchsWeek');
 
         return $match;

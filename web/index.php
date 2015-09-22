@@ -5,7 +5,7 @@ require __DIR__.'/../vendor/doctrine/common/lib/Doctrine/Common/ClassLoader.php'
 use Doctrine\Common\ClassLoader;
 use Symfony\Component\HttpFoundation\Request;
 
-$loader->add("App", dirname(__DIR__));//Ajout du répertoir applicatif dans l'autoloader
+$loader->add("App", dirname(__DIR__));//Ajout du rï¿½pertoir applicatif dans l'autoloader
 //METTRE LE BON CHEMIN VERS DOCTRINE !!!!!!!
 $classLoader = new ClassLoader('Doctrine', '/path/to/doctrine');
 $classLoader->register();
@@ -19,7 +19,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 
 
-//On indique ou aller pour le chemin http://localhost/silex_pronostic/web/index.php/
+//Rooting Post
 $app->post('mom', function (Request $request) use ($app) {
     $pseudo = $request->get('pseudo');
     $app['session']->set('tmp_message', ['pseudo' => $pseudo]);
@@ -27,6 +27,14 @@ $app->post('mom', function (Request $request) use ($app) {
     return $app->redirect('/silex_pronostic/web/index.php/MatchController');
 })->bind('mom');
 
+$app->post('pronostic', function (Request $request) use ($app) {
+    //Sauvegarder les donnÃ©es du formulaire dans la session
+
+    return $app->redirect('/silex_pronostic/web/index.php/PronosController/validerPronos');
+})->bind('pronostic');
+
+
+//Rooting GET
 $app->get('/pronostic/', function (Request $request) use ($app) {
     $id = $request->get('match_id');
     $app['session']->set('tmp_message', ['match_id' => $id]);

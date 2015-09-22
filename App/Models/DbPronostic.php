@@ -31,28 +31,39 @@ class DbPronostic
 
     }
 
+
     /**
-     * Permet de récuperer un utilisateur
-     * @param $nom_user
-     * @return array
+     * Permet de récupérer l'id d'un utilisateur.
+     * @param $nom_user Pseudo de l'utilisateur.
+     * @return null Renvoie null si l'utilisateur n'existe pas sinon renvoie l'id.
      * @throws \Doctrine\DBAL\DBALException
      */
     public function getIdUser ($nom_user)
-    {
+    {//Récuperer l'exception !!'
         $sql = "SELECT id
                 FROM users
                 WHERE nom = :pseudo";
-
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue("pseudo", $nom_user);
         $stmt->execute();
-
-        return $stmt->fetchAll();
+        $reponse = $stmt->fetchAll();
+        $taille = sizeof($reponse);
+        if ($taille != 0) {
+            return $reponse[0]['id'];
+        }
+        return null;
     }
 
+    /**
+     * Permet de récupérer le pronostic d'un match de l'utilisateur.
+     * @param $id_user l'identifiant d'un utilisateur.
+     * @param $id_match l'identifiant d'un match .
+     * @return null renvoie null si le pronostic est inexistant Sinon renvoie un tablaeu de données.
+     * @throws \Doctrine\DBAL\DBALException
+     */
     public function getMatch ($id_user, $id_match)
-    {
-        $sql = "SELECT id
+    {//Récuperer l'exception !!'
+        $sql = "SELECT *
                 FROM matchs
                 WHERE user_id = :id_user
                 AND match_id = :match_id";
@@ -62,7 +73,13 @@ class DbPronostic
         $stmt->bindValue('match_id', $id_match);
         $stmt->execute();
 
-        return $stmt->fetchAll();
+        $reponse = $stmt->fetchAll();
+        $taille = sizeof($reponse);
+        if ($taille != 0) {
+            return $reponse[0];
+        }
+        return null;
     }
+
 
 }
