@@ -88,7 +88,18 @@ class PronosController implements ControllerProviderInterface
      */
     public function dashboardResult (Application $app)
     {
-        return $app['twig']->render('dashboardResult.twig');
+        $flash_tmp_message = "";
+        $flash = false;
+        $flash_message = $app['session']->get('flash');
+        if ($flash_message != null){
+            $flash = $flash_message['flash'];
+            $flash_tmp_message = $flash_message['tmp_message'];
+            $app['session']->set('flash', null);
+        }
+        return $app['twig']->render('dashboardResult.twig', array (
+            'flash' => $flash,
+            'flash_message' => $flash_tmp_message,
+        ));
     }
 
     /**

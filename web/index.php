@@ -9,6 +9,7 @@ $filename = __DIR__.preg_replace('#(\?.*)$#', '', $_SERVER['REQUEST_URI']);
 if (php_sapi_name() === 'cli-server' && is_file($filename)) {
     return false;
 }
+
 $loader->add("App", dirname(__DIR__));//Ajout du r�pertoir applicatif dans l'autoloader
 //METTRE LE BON CHEMIN VERS DOCTRINE !!!!!!!
 $classLoader = new ClassLoader('Doctrine', '/path/to/doctrine');
@@ -24,19 +25,19 @@ $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 
 
 //Rooting Post
-$app->post('mom', function (Request $request) use ($app) {
+$app->post('match_du_jour', function (Request $request) use ($app) {
     $pseudo = $request->get('pseudo');
     $app['session']->set('tmp_message', ['pseudo' => $pseudo]);
 
     return $app->redirect('/silex_pronostic/web/index.php/MatchController');
-})->bind('mom');
+})->bind('match_du_jour');
 
 $app->post('period', function (Request $request) use ($app) {
     $pseudo = $request->get('pseudo');
     $dateDebut = $request->get('dateDebut');
     $dateFin = $request->get('dateFin');
     //Traitement A FAIRE : vérifier que les dates soient valide !!
-    //Si invalide : faire une redirection avecc un message flash !
+    //Si invalide : faire une redirection avec un message flash !
     $app['session']->set('tmp_message', ['pseudo' =>$pseudo,
                                         'dateDebut' => $dateDebut,
                                         'dateFin' => $dateFin,
@@ -65,7 +66,7 @@ $app->mount("/MatchController", new App\Controllers\MatchController());
 $app->mount("/PronosController", new App\Controllers\PronosController());
 $app->mount("/", new App\Controllers\IndexController());
 
-
+$app->run();
 
 
 /*
@@ -139,5 +140,5 @@ $app->get('/silex', function () use ($app) {
                                                     ));
 });
 */
-$app->run();
+
 
