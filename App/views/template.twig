@@ -48,6 +48,11 @@
 
 <div class="container center-elements" style="margin-top: 45px;" >
 <div class="container center-elements" style="margin-top: 45px;" >
+    <div style="color: dodgerblue">
+        {% if(flash == true) %}
+            {{ flash_message }}
+        {% endif %}
+    </div>
     <div class="starter-template " >
         <h1>{% block title_content %}{% endblock %}</h1>
         <div > {% block content %}{% endblock %}</div>

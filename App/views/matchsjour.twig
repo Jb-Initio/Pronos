@@ -5,6 +5,14 @@
 {% block title_content %} Match du jour {% endblock %}
 
 {% block content %}
+
+    <form class="form-signin" action="{{ app.url_generator.generate('period') }}" method="POST">
+        <label >Veuillez saisir une période de match</label>
+        <input type="text" id="dateDebut" name="dateDebut"  style="display: inline" placeholder="23.09.2015" required autofocus>
+        <input type="text" id="dateFin" name="dateFin"  style="display: inline" placeholder="30.09.2015" required >
+        <button class="btn btn-xs btn-primary" type="submit">Rechercher</button>
+    </form>
+
     <table class="table table-condensed table table-bordered" >
         <thead>
             <tr >

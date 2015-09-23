@@ -70,7 +70,9 @@ class PronosController implements ControllerProviderInterface
             'date_debut' => $date_debut_match
         ));
 
+        $flash = false;
         return $app['twig']->render('pronostic.twig', array(
+                                                            'flash' => $flash,
                                                             'local_name' =>  $local_name,
                                                             'visitor_name' => $visitor_name,
                                                             'local_pronos' => $local_score_pronos,
@@ -131,7 +133,12 @@ class PronosController implements ControllerProviderInterface
         //Vérifier les données saisies par l'user'
         //Rentrer le nom d'utilisateur dans la bdd
         //Rentrer le pronostic de l'user dans la bdd
-
+        $tmp_message = "Nous vous redirigeons vers cette page car la fonction de
+        traitement pour le pronostic est en cours de développement";
+        $app['session']->set('flash', array(
+            "flash" => true,
+            "tmp_message" => $tmp_message
+        ));
         return $app->redirect('/silex_pronostic/web/index.php/MatchController');
     }
 

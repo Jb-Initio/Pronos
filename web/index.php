@@ -27,6 +27,20 @@ $app->post('mom', function (Request $request) use ($app) {
     return $app->redirect('/silex_pronostic/web/index.php/MatchController');
 })->bind('mom');
 
+$app->post('period', function (Request $request) use ($app) {
+    $pseudo = $request->get('pseudo');
+    $dateDebut = $request->get('dateDebut');
+    $dateFin = $request->get('dateFin');
+    //Traitement A FAIRE : vérifier que les dates soient valide !!
+    //Si invalide : faire une redirection avecc un message flash !
+    $app['session']->set('tmp_message', ['pseudo' =>$pseudo,
+                                        'dateDebut' => $dateDebut,
+                                        'dateFin' => $dateFin,
+    ]);
+
+    return $app->redirect('/silex_pronostic/web/index.php/MatchController/matchs_period');
+})->bind('period');
+
 $app->post('pronostic', function (Request $request) use ($app) {
     //Sauvegarder les données du formulaire dans la session
 

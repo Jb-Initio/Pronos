@@ -12,7 +12,7 @@ class FootBallAPI
 {
     const  API_KEY =  'a9b47ac5-3ed9-b8b1-05510e59d602';
     /**
-     * Permet d'avoir la liste de toutes les compétitions.
+     * Permet d'avoir la liste de toutes les compï¿½titions.
      * (Seul la Premier League est disponible avec un forfait gratuit)
      * @return mixed
      */
@@ -32,7 +32,7 @@ class FootBallAPI
 
     /**
      * Permet d'avoir l'ensemble des matchs du jour
-     * @return mixed Résultat sour forme objet php
+     * @return mixed Rï¿½sultat sour forme objet php
      */
     public static function getTodayMatchs()
     {
@@ -44,28 +44,28 @@ class FootBallAPI
 
 
     /**
-     * Permet d'avoir l'ensemble des matchs d'une compétition définie sur une période.
-     * (Avec un compte free, seul la Premier League peut être consultée.)
-     * @param Date $from_date date début
+     * Permet d'avoir l'ensemble des matchs d'une compï¿½tition dï¿½finie sur une pï¿½riode.
+     * (Avec un compte free, seul la Premier League peut ï¿½tre consultï¿½e.)
+     * @param Date $from_date date dï¿½but
      * @param Date $to_date date de fin
-     * @param int $comp_id identifiant de la compétition voulu
-     * @return mixed Résultat sour forme objet php
+     * @param int $comp_id identifiant de la compï¿½tition voulu
+     * @return mixed Rï¿½sultat sour forme objet php
      */
-    public static function getPeriodeMatchs(Date $from_date, Date $to_date, $comp_id = 1204)
+    public static function getPeriodMatchs( $from_date,  $to_date, $comp_id = 1204)
     {
-        $req_fixtures = 'http://football-api.com/api/?Action=fixtures&APIKey='.self::API_KEY.'&comp_id=1204&from_date='.from_date.'&to_date='.$to_date;
+        $req_fixtures = 'http://football-api.com/api/?Action=fixtures&APIKey='.self::API_KEY.'&comp_id=1204&from_date='.$from_date.'&to_date='.$to_date;
         $request_fix = new \sylouuu\Curl\Get($req_fixtures);
         $request_fix->send();
         return json_decode($request_fix->getResponse());
     }
 
     /**
-     * Permet d'avoir l'ensemble des matchs du jour correspondant a la league sélectionnée.
-     * Si le 2nd paramêtre n'est pas défini, la date du jour sera automatiquement attribué à $today.
-     * (Avec un compte free, seul la Premier League peut être consultée.)
-     * @param int $comp_id identifiant de la compétition
-     * @param string today spécifie la date des matchs voulus.
-     * @return mixed Résultat sour forme objet php
+     * Permet d'avoir l'ensemble des matchs du jour correspondant a la league sï¿½lectionnï¿½e.
+     * Si le 2nd paramï¿½tre n'est pas dï¿½fini, la date du jour sera automatiquement attribuï¿½ ï¿½ $today.
+     * (Avec un compte free, seul la Premier League peut ï¿½tre consultï¿½e.)
+     * @param int $comp_id identifiant de la compï¿½tition
+     * @param string today spï¿½cifie la date des matchs voulus.
+     * @return mixed Rï¿½sultat sour forme objet php
      */
     public static function getMatchsOfTheDay($comp_id = 1204, $today = null)
     {

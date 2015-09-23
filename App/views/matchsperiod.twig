@@ -2,9 +2,16 @@
 
 {% block title %}Be-Pronostic{% endblock %}
 
-{% block title_content %} Matchs du XdateDebutX au XdateFinX {% endblock %}
+{% block title_content %} Matchs du {{ dateDebut }} au {{ dateFin }} {% endblock %}
 
 {% block content %}
+    <form class="form-signin" action="{{ app.url_generator.generate('mom') }}" method="POST">
+        <label for="dateDebut" >Veuillez saisir une période de match</label>
+        <input type="text" id="dateDebut" name="dateDebut"  placeholder="23.09.2015" required autofocus>
+        <input type="text" id="dateFin" name="dateFin"  placeholder="30.09.2015" required >
+        <button class="btn btn-xs btn-primary " type="submit">Rechercher</button>
+    </form>
+
     <table class="table table-condensed table table-bordered" >
         <thead>
         <tr >
