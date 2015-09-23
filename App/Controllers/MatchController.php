@@ -28,7 +28,9 @@ class MatchController implements ControllerProviderInterface
             $app['session']->set('tmp_message', null);
         }
         //R�cup�ration & stockage  matches data
-        $matchs_jour = FootBallAPI::getMatchsOfTheDay(null, '20.09.2015');
+        $date = date('d.m.Y');
+        $matchs_jour = FootBallAPI::getMatchsOfTheDay(null, $date );
+
         $flash_tmp_message = "";
         $flash = false;
         $flash_message = $app['session']->get('flash');
@@ -37,14 +39,16 @@ class MatchController implements ControllerProviderInterface
             $flash_tmp_message = $flash_message['tmp_message'];
             $app['session']->set('flash', null);
         }
-        if (property_exists($matchs_jour, 'ERROR') && (property_exists($matchs_jour, 'ERROR') == null)){
+        if (property_exists($matchs_jour, 'ERROR')){
+                if ($matchs_jour->ERROR != "OK") {
 
-            return $app['twig']->render('matchsjour.twig', array(
-                                                                 'flash' => $flash,
-                                                                 'flash_message' => $flash_message,
-                                                                'matches' =>[],
-                                                                 'error' => true
-                                                                 ));
+                    return $app['twig']->render('matchsjour.twig', array(
+                        'flash' => true,
+                        'flash_message' => "Il n'y a pas de match pour la période que vous avez choisi",
+                        'matches' => [],
+                        'error' => true
+                    ));
+                }
         }
         $tab_matches = $matchs_jour->matches;
         $app['session']->set('matches', $tab_matches);
@@ -69,11 +73,19 @@ class MatchController implements ControllerProviderInterface
         $tmp_message = $app['session']->get('tmp_message');
         $matchs_jour = FootBallAPI::getPeriodMatchs($tmp_message['dateDebut'], $tmp_message['dateFin']);
 
-        if (property_exists($matchs_jour, 'ERROR') && (property_exists($matchs_jour, 'ERROR') == null)){
+        if (property_exists($matchs_jour, 'ERROR')){
+            if ($matchs_jour->ERROR != "OK") {
+                //var_dump('DESTINATION 1');
 
-            return $app['twig']->render('matchsperiod.twig', array('matches' =>[],
-                'error' => true
-            ));
+                return $app['twig']->render('matchsperiod.twig', array(
+                    'flash' => true,
+                    'flash_message' => "Il n'y a pas de match pour la période que vous avez choisi",
+                    'dateDebut' => $tmp_message['dateDebut'],
+                    'dateFin' => $tmp_message['dateFin'],
+                    'matches' => [],
+                    'error' => true
+                ));
+            }
         }
 
         ////
@@ -86,6 +98,7 @@ class MatchController implements ControllerProviderInterface
             $flash_message = $app['session']->set('flash', null);
         }
         ////
+       // var_dump('DESTINATION 2');
         $tab_matches = $matchs_jour->matches;
         $app['session']->set('matches', $tab_matches);
         return $app['twig']->render('matchsperiod.twig', array(

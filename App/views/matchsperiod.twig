@@ -5,7 +5,7 @@
 {% block title_content %} Matchs du {{ dateDebut }} au {{ dateFin }} {% endblock %}
 
 {% block content %}
-    <form class="form-signin" action="{{ app.url_generator.generate('match_du_jour') }}" method="POST">
+    <form class="form-signin" action="{{ app.url_generator.generate('period') }}" method="POST">
         <label for="dateDebut" >Veuillez saisir une période de match</label>
         <input type="text" id="dateDebut" name="dateDebut"  placeholder="23.09.2015" required autofocus>
         <input type="text" id="dateFin" name="dateFin"  placeholder="30.09.2015" required >
