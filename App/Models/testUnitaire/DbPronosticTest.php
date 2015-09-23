@@ -13,15 +13,22 @@ use App\Models\DbPronostic;
 
 class DbPronosticTest extends \PHPUnit_Framework_TestCase
 {
-    public function getIdUserTest ()
+
+    public function setUp ()
+    {
+        require_once  DbPronostic.php;
+    }
+   /* public function testGetIdUser ()
     {
 
         $dbProno = new DbPronostic();
-        $this->assertEquals($dbProno->getIdUser('bobino'), 2);
-        $this->assertNull($dbProno->getIdUser('bopo'));
-    }
+        $expected = 2;
+        $this->assertEquals(2, 2);
+        //$this->assertEquals(1, 0);
+        //$this->assertEquals($expected, $dbProno->getIdUser('bobino'), 'Veleur de retour de getIdUser() de DbPronostic incorrect');
+    }*/
 
-    public function getMatchTest ()
+    public function testGetMatch ()
     {
         $expected = array(
             'id' =>  '2',
@@ -35,6 +42,6 @@ class DbPronosticTest extends \PHPUnit_Framework_TestCase
             'user_id' => '2'
         );
         $dbProno = new DbPronostic();
-        $this->assertEquals($dbProno->getMatch('2', '15752'), $expected);
+        $this->assertArraySubset($expected, $dbProno->getMatch('2', '15752'));
     }
 }

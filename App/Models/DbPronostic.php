@@ -81,5 +81,13 @@ class DbPronostic
         return null;
     }
 
+    /**
+     * Récupère tous les pronostics de l'utilisateur
+     * @param $id_user id de l'utilisateur
+     * @return array $tableau_matches contient tous les pronostics de l'utilisateur..
+     */
+    public function getMatchAll ($id_user)
+    {
 
+    }
 }

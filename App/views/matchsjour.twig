@@ -5,14 +5,14 @@
 {% block title_content %} Match du jour {% endblock %}
 
 {% block content %}
-    <table class="table table-condensed table table-bordered">
+    <table class="table table-condensed table table-bordered" >
         <thead>
             <tr >
                 <th >Equipe local</th>
                 <th >vs</th>
                 <th >Equipe Visiteur</th>
-                <th >Date de début</th>
-                <th >Heure de début</th>
+                <th >Date de dï¿½but</th>
+                <th >Heure de dï¿½but</th>
             </tr>
         </thead>
 
@@ -26,7 +26,6 @@
                     <td >{{ match.match_formatted_date}}</td>
                     <td >{{ match.match_time}}</td>
                 </tr>
-
         {% endfor %}
         </tbody>
     </table>

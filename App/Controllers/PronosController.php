@@ -52,6 +52,7 @@ class PronosController implements ControllerProviderInterface
 
         $db_prono = new DbPronostic();
         $id_user = $db_prono->getIdUser($nom_user);
+
         if ($id_user != null) { //Si l'utilisateur est  enregistré dans la base
             $match = $db_prono->getMatch($id_user, explode("'", $match_id_tmp['match_id'])[1]);//Données de bdd
             $local_score_pronos  = $match['local_team_score_pronos'];
@@ -72,8 +73,8 @@ class PronosController implements ControllerProviderInterface
         return $app['twig']->render('pronostic.twig', array(
                                                             'local_name' =>  $local_name,
                                                             'visitor_name' => $visitor_name,
-                                                            'local_score_pronos' => $local_score_pronos,
-                                                            'visitor_score_pronos' => $visitor_score_pronos,
+                                                            'local_pronos' => $local_score_pronos,
+                                                            'visitor_pronos' => $visitor_score_pronos,
                                                             'activate_fields' => $activate_fields,
                                                             'heure_debut' => $heure_debut_match,
                                                             'date_debut' => $date_debut_match
@@ -83,9 +84,9 @@ class PronosController implements ControllerProviderInterface
     /**
      * Calcule tout les points de chaque match et le total des points.
      */
-    public function dashboardResult ()
+    public function dashboardResult (Application $app)
     {
-
+        return $app['twig']->render('dashboardResult.twig');
     }
 
     /**
@@ -100,6 +101,8 @@ class PronosController implements ControllerProviderInterface
         $prono = $app['controllers_factory'];
         $prono->match("/", __CLASS__.'::pronostic');
         $prono->match("/pronostic", __CLASS__.'::pronostic');
+        $prono->match("/validerPronos", __CLASS__.'::validerPronos');
+        $prono->match("/resultat", __CLASS__.'::dashboardResult');
         return $prono;
     }
 
@@ -128,6 +131,7 @@ class PronosController implements ControllerProviderInterface
         //Vérifier les données saisies par l'user'
         //Rentrer le nom d'utilisateur dans la bdd
         //Rentrer le pronostic de l'user dans la bdd
+
         return $app->redirect('/silex_pronostic/web/index.php/MatchController');
     }
 
@@ -143,7 +147,7 @@ class PronosController implements ControllerProviderInterface
      * @param string $decalage permet de préciser le décalage sur le temps courant.
      * @return bool true si le temps passé en paramètre n'a pas été dépassé. Sinon retourn false.
      */
-    private function isNotTimeout($date_debut_match, $heure_debut_match, $avance = true, $decalage = 'PT1H')
+    public static function isNotTimeout($date_debut_match, $heure_debut_match, $avance = true, $decalage = 'PT1H')
     {
         $date_time_match = new \DateTime($date_debut_match ." ". $heure_debut_match);
         $date_time_courante = new  \DateTime(date('d.m.Y H:i'));

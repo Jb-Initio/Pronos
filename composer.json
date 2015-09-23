@@ -21,7 +21,10 @@
         "swiftmailer/swiftmailer": "5.*",
         "sylouuu/php-curl": "0.6.*",
         "twig/twig": ">=1.8,<2.0-dev",
-        "phpunit/phpunit": "4.8.*"
+        "phpunit/phpunit": "4.8.*",
+        "phpunit/php-invoker": "*",
+        "phpunit/dbunit": ">=1.2",
+        "phpunit/phpunit-selenium": ">=1.2"
 
     }
 }

@@ -1,0 +1,33 @@
+{% extends "template.twig" %}
+
+{% block title %}Be-Pronostic{% endblock %}
+
+{% block title_content %} Matchs du XdateDebutX au XdateFinX {% endblock %}
+
+{% block content %}
+    <table class="table table-condensed table table-bordered" >
+        <thead>
+        <tr >
+            <th >Equipe local</th>
+            <th >vs</th>
+            <th >Equipe Visiteur</th>
+            <th >Date de d�but</th>
+            <th >Heure de d�but</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for match in matches %}
+
+            <tr >
+                <td > {{ match.match_localteam_name}}</td>
+                <td ><a href="{{ app.url_generator.generate('pronostic') }}?match_id='{{ match.match_id }}'"> <>  </a></td>
+                <td >{{ match.match_visitorteam_name}}</td>
+                <td >{{ match.match_formatted_date}}</td>
+                <td >{{ match.match_time}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+

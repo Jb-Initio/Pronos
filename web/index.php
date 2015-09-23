@@ -31,7 +31,7 @@ $app->post('pronostic', function (Request $request) use ($app) {
     //Sauvegarder les données du formulaire dans la session
 
     return $app->redirect('/silex_pronostic/web/index.php/PronosController/validerPronos');
-})->bind('pronostic');
+})->bind('validation');
 
 
 //Rooting GET
