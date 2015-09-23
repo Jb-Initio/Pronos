@@ -33,11 +33,6 @@ class IndexController implements ControllerProviderInterface
         ));
     }
 
-    public function deux(Application $app)
-    {
-        var_dump('Fonction : deux()');
-        die();
-    }
     /**
      * Returns routes to connect to the given application.
      *

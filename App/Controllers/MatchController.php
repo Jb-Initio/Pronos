@@ -50,7 +50,7 @@ class MatchController implements ControllerProviderInterface
         $app['session']->set('matches', $tab_matches);
         return $app['twig']->render('matchsjour.twig', array(
             'flash' => $flash,
-            'flash_message' => $flash_message,
+            'flash_message' => $flash_tmp_message,
             'matches' => $tab_matches));
     }
 
@@ -77,6 +77,7 @@ class MatchController implements ControllerProviderInterface
         }
 
         ////
+        $flash_tmp_message = "";
         $flash = false;
         $flash_message = $app['session']->get('flash');
         if ($flash_message != null){
