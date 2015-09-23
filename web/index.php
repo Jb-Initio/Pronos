@@ -5,6 +5,10 @@ require __DIR__.'/../vendor/doctrine/common/lib/Doctrine/Common/ClassLoader.php'
 use Doctrine\Common\ClassLoader;
 use Symfony\Component\HttpFoundation\Request;
 
+$filename = __DIR__.preg_replace('#(\?.*)$#', '', $_SERVER['REQUEST_URI']);
+if (php_sapi_name() === 'cli-server' && is_file($filename)) {
+    return false;
+}
 $loader->add("App", dirname(__DIR__));//Ajout du r�pertoir applicatif dans l'autoloader
 //METTRE LE BON CHEMIN VERS DOCTRINE !!!!!!!
 $classLoader = new ClassLoader('Doctrine', '/path/to/doctrine');

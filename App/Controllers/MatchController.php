@@ -29,16 +29,29 @@ class MatchController implements ControllerProviderInterface
         }
         //R�cup�ration & stockage  matches data
         $matchs_jour = FootBallAPI::getMatchsOfTheDay(null, '20.09.2015');
-
+        $flash_tmp_message = "";
+        $flash = false;
+        $flash_message = $app['session']->get('flash');
+        if ($flash_message != null){
+            $flash = $flash_message['flash'];
+            $flash_tmp_message = $flash_message['tmp_message'];
+            $app['session']->set('flash', null);
+        }
         if (property_exists($matchs_jour, 'ERROR') && (property_exists($matchs_jour, 'ERROR') == null)){
 
-            return $app['twig']->render('matchsjour.twig', array('matches' =>[],
+            return $app['twig']->render('matchsjour.twig', array(
+                                                                 'flash' => $flash,
+                                                                 'flash_message' => $flash_message,
+                                                                'matches' =>[],
                                                                  'error' => true
                                                                  ));
         }
         $tab_matches = $matchs_jour->matches;
         $app['session']->set('matches', $tab_matches);
-        return $app['twig']->render('matchsjour.twig', array('matches' => $tab_matches));
+        return $app['twig']->render('matchsjour.twig', array(
+            'flash' => $flash,
+            'flash_message' => $flash_message,
+            'matches' => $tab_matches));
     }
 
     public function matchsWeek(Application $app)
@@ -66,7 +79,7 @@ class MatchController implements ControllerProviderInterface
         ////
         $flash = false;
         $flash_message = $app['session']->get('flash');
-        if ($flash_message === null){
+        if ($flash_message != null){
             $flash = $flash_message['flash'];
             $flash_tmp_message = $flash_message['tmp_message'];
             $flash_message = $app['session']->set('flash', null);

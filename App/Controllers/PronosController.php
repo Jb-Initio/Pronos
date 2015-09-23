@@ -60,7 +60,7 @@ class PronosController implements ControllerProviderInterface
         }
 
         $activate_fields = $this->isNotTimeout($date_debut_match, $heure_debut_match);
-        var_dump(array(
+        /*var_dump(array(
             'local_name' =>  $local_name,
             'visitor_name' => $visitor_name,
             'local_pronos' => $local_score_pronos,
@@ -68,7 +68,7 @@ class PronosController implements ControllerProviderInterface
             'activate_fields' => $activate_fields,
             'heure_debut' => $heure_debut_match,
             'date_debut' => $date_debut_match
-        ));
+        ));*/
 
         $flash = false;
         return $app['twig']->render('pronostic.twig', array(

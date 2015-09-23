@@ -17,9 +17,20 @@ class IndexController implements ControllerProviderInterface
 
     public function index(Application $app)
     {
-        var_dump('Fonction : index()');
+        //var_dump('Fonction : index()');
+        $flash_tmp_message = "";
+        $flash = false;
+        $flash_message = $app['session']->get('flash');
+        if ($flash_message != null){
+            $flash = $flash_message['flash'];
+            $flash_tmp_message = $flash_message['tmp_message'];
+            $app['session']->set('flash', null);
+        }
+        return $app['twig']->render('accueil.twig',array(
+                                            'flash' => $flash,
+                                            'flash_message' => $flash_tmp_message
 
-        return $app['twig']->render('accueil.twig',[]);
+        ));
     }
 
     public function deux(Application $app)
@@ -40,7 +51,7 @@ class IndexController implements ControllerProviderInterface
 
         $index->match("/", __CLASS__.'::index');
         $index->match("/IndexController", __CLASS__.'::index');
-        $index->match("/IndexController/index", __CLASS__.'::index');// Code équivalent ==> $index->match("/", 'App\Controller\IndexController::index');
+        $index->match("/IndexController/index", __CLASS__.'::index');// Code ï¿½quivalent ==> $index->match("/", 'App\Controller\IndexController::index');
         $index->match("/IndexController/deux", __CLASS__.'::deux');
 
         return $index;
